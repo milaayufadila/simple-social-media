@@ -1,22 +1,18 @@
 #!/bin/sh
 set -e
 
-mkdir -p bootstrap/cache \
-         storage/framework/cache \
-         storage/framework/sessions \
-         storage/framework/views
+# Buat folder yang diperlukan
+mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views
 
-chown -R www-data:www-data bootstrap storage || true
-chmod -R ug+rwx bootstrap storage || true
+# Install dependensi (ini yang paling penting)
+composer install --no-interaction --optimize-autoloader --no-dev
+npm install --legacy-peer-deps
+npm run build
 
-npm install --legacy-peer-deps --no-audit --progress=false
-npm run dev
-composer install --optimize-autoloader
+# Setup Laravel
 cp .env.example .env || true
-php artisan key:generate
+php artisan key:generate --force
 
-sed -i 's/DB_HOST=127.0.0.1/DB_HOST=172.17.0.2/g' .env
-sed -i 's/DB_PASSWORD=/DB_PASSWORD=password/g' .env
-
-php artisan migrate --force
-php artisan db:seed --force
+# Beri izin akses folder
+chown -R www-data:www-data bootstrap storage
+chmod -R 775 bootstrap storage
