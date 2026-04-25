@@ -2,8 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt update -y && \
     DEBIAN_FRONTEND=noninteractive apt install -y apache2 \
-    php \
-    npm \
+    php \nano Dockerfile
     php-xml \
     php-mbstring \
     php-curl \
