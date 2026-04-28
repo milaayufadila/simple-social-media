@@ -1,7 +1,8 @@
 FROM ubuntu:22.04
 
-RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y apache2 \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends \
+    apache2 \
     php \
     npm \
     php-xml \
@@ -10,8 +11,8 @@ RUN apt update -y && \
     php-mysql \
     php-gd \
     unzip \
-    nano  \
-    curl && \
+    curl \
+    ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
