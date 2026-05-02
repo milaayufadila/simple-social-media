@@ -1,6 +1,6 @@
 services:
   web:
-    image: ${DOCKER_USER}/mila-ayu-fadila-simple-social-media
+    image: ${DOCKER_USER}/mila-simple-social-media
     ports:
       - "8000:8000"
 
